@@ -3,6 +3,7 @@ import config from "./config";
 import initDB, { pool } from "./config/db";
 import logger from "./middleware/logger";
 import { userRoutes } from "./modules/user/user.routes";
+import { authRoutes } from "./modules/auth/auth.route";
 
 
 
@@ -33,6 +34,8 @@ app.get('/', logger, (req:Request, res:Response) => {
 
 app.use("/users", userRoutes)
 
+
+app.use("/auth", authRoutes)
 
 
 
