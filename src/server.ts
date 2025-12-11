@@ -1,13 +1,57 @@
 import app from "./app";
 import config from "./config";
+import initDB, { pool } from "./config/db";
+import logger from "./middleware/logger";
+import { userRoutes } from "./modules/user/user.routes";
+
+
+
+
+const app = express();
+const port = config.port;
+
+// parser
+app.use(express.json());
+// app.use(express.urlencoded());
+
+
+
+// intializing DB
+initDB();
 
 
 
 
 
-const port = config.port || 4000;
 
 
+app.get('/', logger, (req:Request, res:Response) => {
+  res.send('Hello Next Level Developers')
+})
+
+// users CRUD
+
+app.use("/users", userRoutes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.use((req: Request, res:Response)=>{
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+    path: req.path,
+  })
+})
 
 
 
