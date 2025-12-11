@@ -8,15 +8,14 @@ const router = express.Router();
 
 // routes -> controller -> service
 
-router.post("/", userControllers.createUser);
 
 router.get("/", userControllers.getUser);
 
-router.get("/:id", userControllers.getSingleUser)
+// router.get("/:id", userControllers.getSingleUser)
 
-router.put("/:id", userControllers.updateUser);
+router.put("/:userId", userControllers.updateUserById);
 
-router.delete("/:id", userControllers.deleteUser);
+// router.delete("/:id", userControllers.deleteUser);
 
 
 

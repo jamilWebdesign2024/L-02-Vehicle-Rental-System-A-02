@@ -37,7 +37,7 @@ const initDB = async () => {
 
   // console.log("'vehicles' table created (if not exists).");
 
-  // Bookings table
+  // Bookings table]
   await pool.query(`
     CREATE TABLE IF NOT EXISTS bookings (
       id SERIAL PRIMARY KEY,
@@ -53,4 +53,4 @@ const initDB = async () => {
   // console.log("'bookings' table created (if not exists).");
 };
 
-export default initDB
+export default initDB;
