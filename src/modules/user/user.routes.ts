@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { pool } from "../../config/db";
 import { userControllers } from "./user.controller";
+import auth from "../../middleware/auth";
 
 const router = express.Router();
 
@@ -8,14 +8,14 @@ const router = express.Router();
 
 // routes -> controller -> service
 
+// Get all users (Admin Only)
+router.get('/', auth('admin'), userControllers.getAllUsers);
 
-router.get("/", userControllers.getUser);
+// Update a user by ID (Admin or own profile)
+router.put('/:userId', auth(), userControllers.updateUserById);
 
-// router.get("/:id", userControllers.getSingleUser)
-
-router.put("/:userId", userControllers.updateUserById);
-
-// router.delete("/:id", userControllers.deleteUser);
+// Delete a user by ID (Admin Only)
+router.delete('/:userId', auth('admin'), userControllers.deleteUser)
 
 
 

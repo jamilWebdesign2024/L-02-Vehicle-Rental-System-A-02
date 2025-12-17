@@ -1,34 +1,10 @@
 import { Request, Response } from "express";
-import { pool } from "../../config/db";
 import { userServices } from "./user.service";
 
-// const createUser = async(req:Request, res:Response) => {
-//   // const {name, email, password, phone, role} = req.body;
-
-//   try{
-//     const result = await userServices.createUser(req.body);
-    
-//     // console.log(result.rows[0]);
-//     res.status(201).json({
-//       success: false,
-//       message: "Data Inserted successfully",
-//       data: result.rows[0]
-//     })
-   
-//   }
-  
-//   catch(err:any){
-//     res.status(500).json({
-//       success: false,
-//       message: err.message
-//     })
-//   }
-
-// }
-
-const getUser = async(req:Request, res:Response)=>{
+// Get all users  (Admin only)
+const getAllUsers = async(req:Request, res:Response)=>{
     try{
-      const result = await userServices.getAllUser();
+      const result = await userServices.getAllUsers();
 
       res.status(200).json({
         success: true,
@@ -39,14 +15,13 @@ const getUser = async(req:Request, res:Response)=>{
     catch(err:any){
       res.status(500).json({
         success: false,
-        message: err.message,
-        details: err
+        message: err.message
       })
     }
 };
 
 
-
+// Update a user by Id (Admin or own profile)
 const updateUserById = async(req:Request, res:Response)=>{
   // console.log(req.params.id);
   const {userId} = req.params as {userId:string};
@@ -78,73 +53,44 @@ const updateUserById = async(req:Request, res:Response)=>{
   }
 }
 
-
-// const getSingleUser = async(req:Request, res:Response)=>{
-//   console.log(req.params.id);
+// Delete a user by Id (Admin only)
+const deleteUser = async(req:Request, res:Response)=>{
+  const {userId}= req.params as {userId: string}
   
-//   try{
-//     const result = await userServices.getSingleUser(req.params.id as string);
 
-//     if(result.rows.length === 0){
-//       res.status(404).json({
-//         success: false,
-//         message: "User not found",
-//       })
-//     }
-//     else{
-//       res.status(200).json({
-//         success:true,
-//         message: "User fetched successfully",
-//         data: result.rows[0]
-//       })
-//     }
-    
-//   }catch(err:any){
-//     res.status(500).json({
-//         success: false,
-//         message: err.message,
-//       })
-//   }
-// }
+  try{
+    const result = await userServices.deleteUserById(parseInt(userId));
 
-
-
-
-// const deleteUser = async(req:Request, res:Response)=>{
-//   // console.log(req.params.id);
-  
-//   try{
-//     const result = await userServices.deleteUser(req.params.id as string);
-
-//     console.log(result);
+    console.log(result);
     
 
-//     if(result.rowCount === 0){
-//       res.status(404).json({
-//         success: false,
-//         message: "User not found",
-//       })
-//     }
-//     else{
-//       res.status(200).json({
-//         success:true,
-//         message: "User deleted successfully",
-//         data: result.rows
-//       })
-//     }
+    if(result.rowCount === 0){
+      res.status(404).json({
+        success: false,
+        message: "User not found",
+      })
+    }
+    else{
+      res.status(200).json({
+        success:true,
+        message: "User deleted successfully"
+      })
+    }
     
-//   }catch(err:any){
-//     res.status(500).json({
-//         success: false,
-//         message: err.message,
-//       })
-//   }
-// }
+  }catch(err:any){
+    res.status(400).json({
+        success: false,
+        message: 'Error deleting user from the database',
+        error: err.message
+      })
+  }
+}
 
 
 
 
 export const userControllers = {
-    updateUserById,
-    getUser,
+   getAllUsers,
+   updateUserById,
+   deleteUser
   }
