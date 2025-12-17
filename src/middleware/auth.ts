@@ -2,9 +2,7 @@ import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import config from "../config";
 
-//?auth middleware
-
-
+//auth middleware
 
 const auth = (...roles: string[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {

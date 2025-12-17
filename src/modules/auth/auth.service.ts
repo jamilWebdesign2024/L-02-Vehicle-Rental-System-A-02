@@ -27,7 +27,7 @@ const signUpUser = async(userData: {
 
     // Insert User
     const result = await pool.query(
-        `INSERT INFO users (name, email, password, phone, role) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, phone, role`, [name, email.toLowerCase(), hashedPassword, phone, role]
+        `INSERT INTO users (name, email, password, phone, role) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, email, phone, role`, [name, email.toLowerCase(), hashedPassword, phone, role]
     );
     return result.rows[0];
 };

@@ -1,8 +1,11 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import config from "./config";
 import initDB, { pool } from "./config/db";
 import logger from "./middleware/logger";
 import { userRoutes } from "./modules/user/user.routes";
+import { vehicleRoutes } from "./modules/vahicles/vahicle.route";
+import { bookingRoutes } from "./modules/bookings/booking.route";
+import { authRoutes } from "./modules/auth/auth.route";
 
 
 
@@ -31,12 +34,20 @@ app.get('/', logger, (req:Request, res:Response) => {
 });
 
 app.get('/api/v1', logger, (req: Request, res: Response) => {
-  res.send('Wow😲Vehicle Rental System Server is running!')
+  res.send('Vehicle Rental System Server is running!')
 })
 
-// users CRUD
-app.use("/api/v1/users", userRoutes)
+// Authentication
+app.use("/api/v1/auth", authRoutes)
 
+// User Routes
+app.use('/api/v1/users', userRoutes);
+
+// Vehicle Routes
+app.use('/api/v1/vehicles', vehicleRoutes);
+
+// Booking Routes
+app.use('/api/v1/bookings', bookingRoutes);
 
 
 

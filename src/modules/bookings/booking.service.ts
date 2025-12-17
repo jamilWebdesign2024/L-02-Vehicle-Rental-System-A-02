@@ -1,4 +1,5 @@
 import { pool } from "../../config/db";
+import Request from 'express';
 
 export const bookingService = {
     // Create Booking
@@ -114,5 +115,72 @@ export const bookingService = {
     },
 
     // Update booking status 
-    async updateBookin
+    async updateBookingStatus(id:number, status:string, userId:number, userRole:string){
+        const booking = await this.getBookingById(id);
+
+        // customer can only cancel before start date
+        if(userRole === 'customer'){
+            if(status !== 'cancelled'){
+                throw new Error('Customers can only cancel bookings');
+            }
+
+            if(booking.customer_id !== userId){
+                throw new Error('Cannot cancel another customer\'s booking');
+            }
+
+            const startDate = new Date(booking.rent_start_date);
+            if(new Date()>= startDate){
+                throw new Error('Cannot cancel booking after start date');
+            }
+        }
+
+        // Admin can mark as returned
+        if(status === 'returned' && userRole !== 'admin'){
+            throw new Error('Only admin can mark booking as returned');
+        }
+
+        // Update booking status 
+        const result = await pool.query(
+            `UPDATE bookings SET status =$1, updated_at = NOW() WHERE id = $2 RETURNING *`,
+            [status, id]
+        );
+
+        // If cancelled or returned, make vehicle available
+        if(status === 'cancelled' || status === 'returned'){
+            await pool.query(
+                `UPDATE vehicles SET availability_status = $1 WHERE id = $2`,
+                ['available', booking.vehicle_id]
+            );
+
+            // If returned, include vehicle availability in response
+            if(status === 'returned'){
+                const vehicleResult = await pool.query(
+                    `SELECT availability_status FROM vehicles WHERE id = $1`,
+                    [booking.vehicle_id]
+                );
+                return{
+                    ...result.rows[0],
+                    vehicle:{
+                        availability_status: vehicleResult.rows[0].availability_status
+                    }
+                };
+            }
+        }
+        return result.rows[0]
+    },
+
+    // Delete booking (opt)
+    async deleteBooking(id:number){
+        const booking = await this.getBookingById(id);
+
+        // Make vehicle available if booking was active
+        if(booking.status === 'active'){
+            await pool.query(
+                `UPDATE vehicles SET availability_status = $1 WHERE id=$2`,
+                ['available', booking.vehicle.id]
+            )
+        }
+        const result = await pool.query(`DELETE FROM bookings WHERE id = $1 RETURNING id`, [id]);
+        return result.rows[0]
+    }
 }
