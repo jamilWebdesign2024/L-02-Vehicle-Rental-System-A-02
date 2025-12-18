@@ -1,8 +1,8 @@
 # Vehicle Rental System API
 
-**Live URL:** https://vehicle-rental-system-bay.vercel.app  
-**GitHub Repository:** https://github.com/mdmhrz/vehicle-rental-system  
-**Author:** Md. Mobarak Hossain Razu
+**Live URL:** https://vehicle-rental-system-a02.vercel.app  
+**GitHub Repository:** https://github.com/jamilWebdesign2024/L-02-Vehicle-Rental-System-A-02 
+**Author:** Md. Jamil Uddin
 
 A fully functional **Vehicle Rental Management Backend API** built with **Node.js + TypeScript**, **Express**, and **PostgreSQL**. Implements secure JWT authentication, role-based access control (Admin & Customer), vehicle inventory management, and smart booking system with automatic pricing and availability handling.
 
@@ -41,10 +41,10 @@ A fully functional **Vehicle Rental Management Backend API** built with **Node.j
 ## Live API Base URL
 
 ```
-https://vehicle-rental-system-bay.vercel.app/api/v1
+https://vehicle-rental-system-a02.vercel.app/api/v1
 ```
 
-Root (Landing Page): https://vehicle-rental-system-bay.vercel.app
+Root (Landing Page): https://vehicle-rental-system-a02.vercel.app/
 
 ---
 
@@ -116,7 +116,7 @@ Use tools like Postman, cURL, or any HTTP client. Examples use cURL for demonstr
 - **Payload Guide:** Send a JSON body with required fields. Email must be unique and lowercase. Password min 6 chars. Role must be 'admin' or 'customer'.
 - **cURL Example:**
   ```
-  curl -X POST https://vehicle-rental-system-bay.vercel.app/api/v1/auth/signup \
+  curl -X POST https://vehicle-rental-system-a02.vercel.app/api/v1/auth/signup \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
@@ -146,7 +146,7 @@ Use tools like Postman, cURL, or any HTTP client. Examples use cURL for demonstr
 - **Payload Guide:** Send JSON with email and password. Use the token in future requests.
 - **cURL Example:**
   ```
-  curl -X POST https://vehicle-rental-system-bay.vercel.app/api/v1/auth/signin \
+  curl -X POST hhttps://vehicle-rental-system-a02.vercel.app/api/v1/auth/signin \
   -H "Content-Type: application/json" \
   -d '{
     "email": "john.doe@example.com",
@@ -184,7 +184,7 @@ All admin-only endpoints require Authorization header.
 - **Payload Guide:** Send JSON body. Registration number unique, price positive, status 'available' or 'booked'.
 - **cURL Example:**
   ```
-  curl -X POST https://vehicle-rental-system-bay.vercel.app/api/v1/vehicles \
+  curl -X POST https://vehicle-rental-system-a02.vercel.app/api/v1/vehicles \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <jwt_token>" \
   -d '{
@@ -216,7 +216,7 @@ All admin-only endpoints require Authorization header.
 - **Payload Guide:** No body or headers needed.
 - **cURL Example:**
   ```
-  curl -X GET https://vehicle-rental-system-bay.vercel.app/api/v1/vehicles
+  curl -X GET https://vehicle-rental-system-a02.vercel.app/api/v1/vehicles
   ```
 - **Success Response (200 OK):**
   ```json
@@ -257,7 +257,7 @@ All admin-only endpoints require Authorization header.
 - **Payload Guide:** Replace :vehicleId with actual ID. No body.
 - **cURL Example:**
   ```
-  curl -X GET https://vehicle-rental-system-bay.vercel.app/api/v1/vehicles/2
+  curl -X GET https://vehicle-rental-system-a02.vercel.app/api/v1/vehicles/2
   ```
 - **Success Response (200 OK):**
   ```json
@@ -280,7 +280,7 @@ All admin-only endpoints require Authorization header.
 - **Payload Guide:** Send optional JSON fields. Replace :vehicleId.
 - **cURL Example:**
   ```
-  curl -X PUT https://vehicle-rental-system-bay.vercel.app/api/v1/vehicles/1 \
+  curl -X PUT https://vehicle-rental-system-a02.vercel.app/api/v1/vehicles/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <jwt_token>" \
   -d '{
@@ -312,7 +312,7 @@ All admin-only endpoints require Authorization header.
 - **Payload Guide:** Replace :vehicleId. No body. Fails if active bookings.
 - **cURL Example:**
   ```
-  curl -X DELETE https://vehicle-rental-system-bay.vercel.app/api/v1/vehicles/1 \
+  curl -X DELETE https://vehicle-rental-system-a02.vercel.app/api/v1/vehicles/1 \
   -H "Authorization: Bearer <jwt_token>"
   ```
 - **Success Response (200 OK):**
@@ -336,7 +336,7 @@ Require Authorization for all.
 - **Payload Guide:** No body.
 - **cURL Example:**
   ```
-  curl -X GET https://vehicle-rental-system-bay.vercel.app/api/v1/users \
+  curl -X GET https://vehicle-rental-system-a02.vercel.app/api/v1/users \
   -H "Authorization: Bearer <jwt_token>"
   ```
 - **Success Response (200 OK):**
@@ -368,7 +368,7 @@ Require Authorization for all.
 - **Payload Guide:** Optional fields. Admin can change role. Replace :userId.
 - **cURL Example:**
   ```
-  curl -X PUT https://vehicle-rental-system-bay.vercel.app/api/v1/users/1 \
+  curl -X PUT https://vehicle-rental-system-a02.vercel.app/api/v1/users/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <jwt_token>" \
   -d '{
@@ -398,7 +398,7 @@ Require Authorization for all.
 - **Payload Guide:** Replace :userId. No body. Fails if active bookings.
 - **cURL Example:**
   ```
-  curl -X DELETE https://vehicle-rental-system-bay.vercel.app/api/v1/users/1 \
+  curl -X DELETE https://vehicle-rental-system-a02.vercel.app/api/v1/users/1 \
   -H "Authorization: Bearer <jwt_token>"
   ```
 - **Success Response (200 OK):**
@@ -422,7 +422,7 @@ Require Authorization.
 - **Payload Guide:** Send JSON. Validates availability, calculates price.
 - **cURL Example:**
   ```
-  curl -X POST https://vehicle-rental-system-bay.vercel.app/api/v1/bookings \
+  curl -X POST https://vehicle-rental-system-a02.vercel.app/api/v1/bookings \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <jwt_token>" \
   -d '{
@@ -458,7 +458,7 @@ Require Authorization.
 - **Payload Guide:** No body. Response varies by role.
 - **cURL Example:**
   ```
-  curl -X GET https://vehicle-rental-system-bay.vercel.app/api/v1/bookings \
+  curl -X GET https://vehicle-rental-system-a02.vercel.app/api/v1/bookings \
   -H "Authorization: Bearer <jwt_token>"
   ```
 - **Success Response (200 OK) - Admin View:**
@@ -515,7 +515,7 @@ Require Authorization.
 - **Payload Guide:** Send JSON with status. Customer: "cancelled" only. Admin: "returned" only. Replace :bookingId.
 - **cURL Example (Customer Cancellation):**
   ```
-  curl -X PUT https://vehicle-rental-system-bay.vercel.app/api/v1/bookings/1 \
+  curl -X PUT https://vehicle-rental-system-a02.vercel.app/api/v1/bookings/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <jwt_token>" \
   -d '{
@@ -540,7 +540,7 @@ Require Authorization.
   ```
 - **cURL Example (Admin Return):**
   ```
-  curl -X PUT https://vehicle-rental-system-bay.vercel.app/api/v1/bookings/1 \
+  curl -X PUT https://vehicle-rental-system-a02.vercel.app/api/v1/bookings/1 \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer <jwt_token>" \
   -d '{
@@ -617,8 +617,8 @@ JWT_SECRET=your-very-strong-secret-key-here
 ## Local Development
 
 ```bash
-git clone https://github.com/mdmhrz/vehicle-rental-system.git
-cd vehicle-rental-system
+git clone https://github.com/jamilWebdesign2024/L-02-Vehicle-Rental-System-A-02.git
+cd L-02-Vehicle-Rental-System-A-02
 
 npm install
 
@@ -627,7 +627,7 @@ cp .env.example .env    # Then fill your PostgreSQL URL & JWT secret
 npm run dev             # Runs with tsx + auto-restart
 ```
 
-Server runs at: `http://localhost:5000`
+Server runs at: `http://localhost:4000`
 
 ---
 
