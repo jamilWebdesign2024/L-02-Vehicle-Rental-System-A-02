@@ -6,7 +6,7 @@ import { userRoutes } from "./modules/user/user.routes";
 import { vehicleRoutes } from "./modules/vahicles/vahicle.route";
 import { bookingRoutes } from "./modules/bookings/booking.route";
 import { authRoutes } from "./modules/auth/auth.route";
-
+import path from "path"
 
 
 
@@ -22,9 +22,13 @@ app.use(express.json());
 // intializing DB
 initDB().catch(err=>console.error('Db initialization error', err));
 
+// Serve static files from public folder
+app.use(express.static(path.join(__dirname, "..", "public")));
 
-
-
+// Root route
+app.get('/', (req: Request, res: Response) => {
+    res.send(path.join(__dirname, "..", "public", "index.html"))
+})
 
 
 
